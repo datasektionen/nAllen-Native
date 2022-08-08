@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Icon from './icon'
+import { CERISE_LIGHT, CERISE_STRONG } from '../assets/style/colors'
 
 type IconT = {
     name: string,
@@ -9,7 +10,7 @@ type IconT = {
 }
 
 const TabIcon: React.FC<IconT> = ({ name, text, focused }) => {
-    const iconColor = focused ? 'green' : 'blue'
+    const iconColor = focused ? CERISE_STRONG : CERISE_LIGHT;
 
     return (
         <View style={styles.iconMenu} >
@@ -24,7 +25,7 @@ export default TabIcon
 
 const styles = StyleSheet.create({
     iconMenu: {
-        flexDirection: 'row',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
