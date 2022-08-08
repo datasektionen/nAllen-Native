@@ -28,11 +28,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10,
+        textAlign: 'center',
     },
     tabButtonText: {
         fontSize: 12,
         fontWeight: 'bold',
-        marginLeft: 10,
     }
 })

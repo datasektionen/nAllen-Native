@@ -61,7 +61,6 @@ export default function App() {
                     fontSize: 14,
                     textTransform: 'uppercase',
                     paddingTop: 10,
-                    fontWeight: 'bold'
                   },
 
 
@@ -131,7 +130,7 @@ export default function App() {
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
-    </View>
+    </View >
   );
 }
 
