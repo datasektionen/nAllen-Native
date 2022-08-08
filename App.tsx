@@ -61,16 +61,11 @@ export default function App() {
                     fontSize: 14,
                     textTransform: 'uppercase',
                     paddingTop: 10,
+                    fontWeight: 'bold'
                   },
-                  style: {
-                    backgroundColor: BLACK,
-                    borderTopWidth: 0,
-                    marginBottom: 0,
-                    shadowOpacity: 0.05,
-                    shadowRadius: 10,
-                    shadowColor: BLACK,
-                    shadowOffset: { height: 0, width: 0 },
-                  },
+
+
+
                 }}
               >
 
