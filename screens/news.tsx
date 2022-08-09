@@ -22,6 +22,7 @@ const News = () => {
                 title="Nyheter"
                 text={longString}
                 date="2022-08-01"
+                author="John Doe"
             />
         </View>
     )

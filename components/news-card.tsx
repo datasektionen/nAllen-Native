@@ -7,10 +7,11 @@ type Props = {
     title: string,
     text: string,
     date: string,
+    author?: string,
 }
 
 
-const NewsCard: React.FC<Props> = ({ title, text, date }) => {
+const NewsCard: React.FC<Props> = ({ title, text, date, author }) => {
     const [isExpanded, setIsExpanded] = useState(false)
     const toggleExpanded = () => setIsExpanded(!isExpanded)
 
@@ -39,6 +40,7 @@ const NewsCard: React.FC<Props> = ({ title, text, date }) => {
                     :
                     <Text style={styles.text}>{text}</Text>
                 }
+                {author && <Text style={styles.authorText}>Author: {author}</Text>}
             </View>
         </View >
     )
@@ -87,4 +89,11 @@ const styles = StyleSheet.create({
         height: 'auto'
     },
 
+    authorText: {
+        fontSize: 14,
+        // grey
+        color: '#ccc',
+        // italic
+        //fontStyle: 'italic',
+    }
 })
