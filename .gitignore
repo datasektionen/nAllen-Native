@@ -14,3 +14,4 @@ package-lock.json
 
 # cringe macOS
 .DS_Store
+.firebase-config.ts

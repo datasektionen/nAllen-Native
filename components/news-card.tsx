@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { CERISE_STRONG, WHITE } from '../assets/style/colors'
+import { UserContext } from '../utils/user'
 import Icon from './icon'
 
 type Props = {
@@ -14,6 +15,8 @@ type Props = {
 const NewsCard: React.FC<Props> = ({ title, text, date, author }) => {
     const [isExpanded, setIsExpanded] = useState(false)
     const toggleExpanded = () => setIsExpanded(!isExpanded)
+
+    const { user } = useContext(UserContext)
 
     const maxChars = 50
     const isLong = text.length > maxChars
@@ -97,3 +100,4 @@ const styles = StyleSheet.create({
         //fontStyle: 'italic',
     }
 })
+
