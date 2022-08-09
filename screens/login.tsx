@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Button, TextInput, Text } from "react-native";
+import { StyleSheet, Button, TextInput, Text, TouchableOpacity } from 'react-native'
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "../.firebase-config";
@@ -42,7 +42,10 @@ const Login = ({ navigation }: any) => {
       <TextInput style={styles.text} onChangeText={password => setPassword(password)} />
       <Button title="Register" onPress={() => register()} />
       <Button title="Login" onPress={() => login()} />
-      <Button title="Yeet" onPress={() => navigation.navigate("Tab")} />
+
+      <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Tab')}>
+        <Text>Yeet</Text>
+      </TouchableOpacity>
     </>
   );
 }
@@ -51,31 +54,14 @@ const styles = StyleSheet.create({
   text: {
     color: "salmon",
   },
+  container: {
+    widht: "100%",
+    height: "20%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    fontSize: 40,
+  },
 });
 
 export default Login;
-=======
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
-
-const Login: React.FC = ({ navigation }: any) => {
-    return (
-        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Tab')}>
-            <Text>Go To App</Text>
-        </TouchableOpacity>
-    )
-}
-
-export default Login
-
-// styles
-const styles = StyleSheet.create({
-    container: {
-        widht: "100%",
-        height: "20%",
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        fontSize: 40,
-    },
-})
