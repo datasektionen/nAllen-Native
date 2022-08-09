@@ -41,11 +41,11 @@ export default function App() {
           }}
         >
 
-          {/* <Stack.Screen
+          <Stack.Screen
             name="Login"
             options={{ headerShown: false, animationEnabled: false }}
-            component={LoginPage}
-          /> */}
+            component={Login}
+          />
 
           <Stack.Screen
             name="Tab"
