@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { BLACK, CERISE_LIGHT, CERISE_STRONG, } from './assets/style/colors';
+import { BLACK, LIGHT_GRAY, CERISE_STRONG, GRAY, WHITE, } from './assets/style/colors';
 import Login from './screens/login';
 import Calendar from './screens/calendar';
 import Home from './screens/home';
@@ -42,16 +42,6 @@ export default function App() {
               <Tab.Navigator
                 tabBarOptions={{
                   showLabel: false,
-                  activeTintColor: CERISE_STRONG,
-                  inactiveTintColor: CERISE_LIGHT,
-                  labelStyle: {
-                    fontSize: 14,
-                    textTransform: 'uppercase',
-                    paddingTop: 10,
-                  },
-
-
-
                 }}
               >
 
