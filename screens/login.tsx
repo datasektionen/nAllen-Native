@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button } from "react-native";
+import { StyleSheet, Button, TextInput, Text } from "react-native";
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "../.firebase-config";
 
 if (getApps().length == 0)
@@ -10,18 +10,47 @@ if (getApps().length == 0)
 const app = getApp();
 const auth = getAuth(app);
 
-const Login = () => {
-  const [doLogin, setDoLogin] = useState(false);
+const Login = ({ navigation }: any) => {
   const [email, setEmail] = useState("mathiasmagnussons@gmail.com");
-  const [passoword, setPassoword] = useState("arstarsarst");
+  const [passoword, setPassword] = useState("arstarsarst");
+
+  const register = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, passoword);
+
+      navigation.navigate("Tab");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const login = async () => {
-    const user = createUserWithEmailAndPassword(auth, email, passoword);
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, passoword);
+
+      navigation.navigate("Tab");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    <Button title="Bing bong" onPress={() => login()} />
+    <>
+      <Text>Email</Text>
+      <TextInput style={styles.text} onChangeText={email => setEmail(email)} />
+      <Text>Password</Text>
+      <TextInput style={styles.text} onChangeText={password => setPassword(password)} />
+      <Button title="Register" onPress={() => register()} />
+      <Button title="Login" onPress={() => login()} />
+      <Button title="Yeet" onPress={() => navigation.navigate("Tab")} />
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    color: "salmon",
+  },
+});
 
 export default Login;
