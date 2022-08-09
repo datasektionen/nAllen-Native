@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { initializeApp } from 'firebase/app';
 import { BLACK, LIGHT_GRAY, CERISE_STRONG, GRAY, WHITE, } from './assets/style/colors';
 import Login from './screens/login';
 import Calendar from './screens/calendar';
@@ -14,18 +13,6 @@ import News from './screens/news';
 import Profile from './screens/profile';
 
 import { TabIcon } from './components'
-
-
-
-
-// Optionally import the services that you want to use
-//import {...} from "firebase/auth";
-//import {...} from "firebase/database";
-//import {...} from "firebase/firestore";
-//import {...} from "firebase/functions";
-//import {...} from "firebase/storage";
-
-
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
