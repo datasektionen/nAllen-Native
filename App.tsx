@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { initializeApp } from 'firebase/app';
 import { BLACK, CERISE_LIGHT, CERISE_STRONG, } from './assets/style/colors';
 import Login from './screens/login';
 import Calendar from './screens/calendar';
@@ -15,14 +14,11 @@ import Profile from './screens/profile';
 
 import { TabIcon } from './components'
 
-
-
-
-export default function App() {
-
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+export default function App() {
+  return (
     <View style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator
@@ -32,11 +28,11 @@ const Tab = createBottomTabNavigator();
           }}
         >
 
-          {/* <Stack.Screen
+          <Stack.Screen
             name="Login"
             options={{ headerShown: false, animationEnabled: false }}
-            component={LoginPage}
-          /> */}
+            component={Login}
+          />
 
           <Stack.Screen
             name="Tab"
