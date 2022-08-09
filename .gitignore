@@ -9,7 +9,9 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+package-lock.json
+.firebase-config.ts
 
-# macOS
+# cringe macOS
 .DS_Store
 .firebase-config.ts
