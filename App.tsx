@@ -1,34 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { initializeApp } from 'firebase/app';
-
-// Optionally import the services that you want to use
-//import {...} from "firebase/auth";
-//import {...} from "firebase/database";
-//import {...} from "firebase/firestore";
-//import {...} from "firebase/functions";
-//import {...} from "firebase/storage";
-
-// Initialize Firebase
-const firebaseConfig = {
-  apiKey: 'api-key',
-  authDomain: 'project-id.firebaseapp.com',
-  databaseURL: 'https://project-id.firebaseio.com',
-  projectId: 'project-id',
-  storageBucket: 'project-id.appspot.com',
-  messagingSenderId: 'sender-id',
-  appId: 'app-id',
-  measurementId: 'G-measurement-id',
-};
-
-initializeApp(firebaseConfig);
+import { StyleSheet, Button, Text } from "react-native";
+import { auth, RecaptchaVerifier, app } from "./lib/firebase";
 
 export default function App() {
+  const v = new RecaptchaVerifier("recap", null, app);
+  const f = async () => {
+    try {
+      const res = await auth.signInWithPhoneNumber("+46793488021", v);
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <Text className="recap" />
+      <Button title="Bing bong" onPress={() => f} />
+    </>
   );
 }
 
