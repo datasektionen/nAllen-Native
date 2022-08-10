@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, TextInput, Text, TouchableOpacity, View, Pressable } from 'react-native'
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "../.firebase-config";
 import { BLACK, CERISE_LIGHT, CERISE_STRONG, WHITE } from "../assets/style/colors";
+import { UserContext } from "../utils/user";
 
-if (getApps().length == 0)
-    initializeApp(firebaseConfig);
 
-export const app = getApp();
-export const auth = getAuth(app);
 
 const Login = ({ navigation }: any) => {
     const [email, setEmail] = useState("mathiasmagnussons@gmail.com");
     const [password, setPassword] = useState("arstarsarst");
+    const { auth, setUser } = useContext(UserContext);
 
     const login = async () => {
         try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
-
+            const user = await signInWithEmailAndPassword(auth!, email, password);
+            setUser(user);
             navigation.navigate("Tab");
+            console.log("User logged in");
         } catch (err) {
             console.error(err);
         }
@@ -37,10 +36,10 @@ const Login = ({ navigation }: any) => {
                     </View>
                     <View style={loginStyles.inputField}>
                         <Text style={loginStyles.title}>Password</Text>
-                        <TextInput style={loginStyles.textInput} onChangeText={password => setPassword(password)} />
+                        <TextInput secureTextEntry style={loginStyles.textInput} onChangeText={password => setPassword(password)} />
                     </View>
                 </View>
-                
+
                 <View style={loginStyles.buttonBar}>
                     <Pressable style={loginStyles.button} onPress={() => login()} >
                         <Text style={loginStyles.buttonText}>Login</Text>
@@ -109,9 +108,9 @@ export const loginStyles = StyleSheet.create({
     },
 
     innerTitle: {
-       fontSize: 30,
-       fontWeight: '900',
-       textAlign: "center",
+        fontSize: 30,
+        fontWeight: '900',
+        textAlign: "center",
     },
 
     button: {
@@ -125,7 +124,7 @@ export const loginStyles = StyleSheet.create({
     inputField: {
         marginTop: 30,
     },
-    
+
     buttonText: {
         color: WHITE,
         fontSize: 20,
