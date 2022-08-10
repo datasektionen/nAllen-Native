@@ -1,20 +1,26 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { View, Text, TouchableOpacity, Button, StyleSheet, TextInput, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import login, { auth } from './login'
 import { BLACK, CERISE_STRONG, WHITE } from '../assets/style/colors';
+import { UserContext } from "../utils/user";
 
 const Register = ({ navigation }: any) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
+    const { setUser } = useContext(UserContext);
 
     const handleRegister = async () => {
         try {
             if (password === rePassword) {
                 const user = await createUserWithEmailAndPassword(auth, email, password);
+                setUser(user);
+                navigation.navigate("Tab");
+
+            } else {
+                console.error("Password does not match")
             }
-            navigation.navigate("Tab");
         } catch (err) {
             console.error(err);
         }
