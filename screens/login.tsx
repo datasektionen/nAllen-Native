@@ -15,7 +15,7 @@ const Login = ({ navigation }: any) => {
 
     const login = async () => {
         try {
-            const user = await signInWithEmailAndPassword(auth!, email, password);
+            await signInWithEmailAndPassword(auth!, email, password);
             navigation.navigate("Tab");
             console.log("User logged in");
         } catch (err) {

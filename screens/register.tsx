@@ -15,7 +15,7 @@ const Register = ({ navigation }: any) => {
     const handleRegister = async () => {
         try {
             if (password === rePassword) {
-                const user = await createUserWithEmailAndPassword(auth!, email, password);
+                await createUserWithEmailAndPassword(auth!, email, password);
                 navigation.navigate("Tab");
                 console.log("User created");
             }
