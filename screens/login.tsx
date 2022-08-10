@@ -27,32 +27,38 @@ const Login = ({ navigation }: any) => {
 
 
     return (
-        <View style={styles.container}>
+        <View style={loginStyles.container}>
+            <View style={loginStyles.innerContainer}>
+                <Text style={loginStyles.innerTitle}>LOGIN</Text>
+                <View>
+                    <View style={loginStyles.inputField}>
+                        <Text style={loginStyles.title}>Email</Text>
+                        <TextInput style={loginStyles.textInput} onChangeText={email => setEmail(email)} />
+                    </View>
+                    <View style={loginStyles.inputField}>
+                        <Text style={loginStyles.title}>Password</Text>
+                        <TextInput style={loginStyles.textInput} onChangeText={password => setPassword(password)} />
+                    </View>
+                </View>
+                
+                <View style={loginStyles.buttonBar}>
+                    <Pressable style={loginStyles.button} onPress={() => login()} >
+                        <Text style={loginStyles.buttonText}>Login</Text>
+                    </Pressable>
 
-            <Text>LOGIN</Text>
-            <View>
-                <Text style={styles.title}>Email</Text>
-                <TextInput style={styles.textInput} onChangeText={email => setEmail(email)} />
-                <Text style={styles.title}>Password</Text>
-                <TextInput style={styles.textInput} onChangeText={password => setPassword(password)} />
+                    <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                        <Text style={loginStyles.linkText} >Create account</Text>
+                    </TouchableOpacity>
+                </View>
+                <Pressable style={{ marginTop: 5, backgroundColor: BLACK }} onPress={() => navigation.navigate('Tab')}>
+                    <Text>Bypass</Text>
+                </Pressable>
             </View>
-
-            <Pressable style={styles.button} onPress={() => login()} >
-                <Text style={styles.buttonText}>Login</Text>
-            </Pressable>
-
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text style={styles.linkText} >Don't have an acount yet? Register here!</Text>
-            </TouchableOpacity>
-
-            <Pressable style={{ marginTop: 100, backgroundColor: BLACK }} onPress={() => navigation.navigate('Tab')}>
-                <Text>Bypass</Text>
-            </Pressable>
         </View >
     );
 }
 
-const styles = StyleSheet.create({
+export const loginStyles = StyleSheet.create({
     title: {
         color: BLACK,
         fontWeight: 'bold',
@@ -66,26 +72,60 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: BLACK,
         padding: 5,
+        marginTop: 4,
     },
+
+    buttonBar: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 10,
+    },
+
     container: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: WHITE,
         fontWeight: 'bold',
         fontSize: 40,
-        marginTop: "40vh",
         padding: 10,
         // space between the flex elements
-        flexWrap: 'wrap',
+        backgroundColor: CERISE_LIGHT,
+        width: "100%",
+        height: "100%",
+    },
+
+    innerContainer: {
+        display: 'flex',
+        padding: 10,
+        borderColor: BLACK,
+        borderStyle: "solid",
+        borderRadius: 10,
+        borderWidth: 2,
+        maxWidth: "90%",
+        width: 500,
+        backgroundColor: WHITE,
+    },
+
+    innerTitle: {
+       fontSize: 30,
+       fontWeight: '900',
+       textAlign: "center",
     },
 
     button: {
         backgroundColor: CERISE_STRONG,
         borderRadius: 5,
-        padding: 10,
-        margin: 10,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        marginVertical: 5,
     },
+
+    inputField: {
+        marginTop: 30,
+    },
+    
     buttonText: {
         color: WHITE,
         fontSize: 20,
