@@ -41,6 +41,12 @@ const UserHandler: React.FC<Props> = ({ children }) => {
         // Do other things
     });
 
+    if (getApps().length == 0)
+        initializeApp(firebaseConfig);
+
+    const app = getApp();
+    const auth = getAuth(app);
+
     return (
         <UserContext.Provider value={{ user, setUser, auth }}>
             {children}
