@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, Text, TouchableOpacity, View, Pressable } from '
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "../.firebase-config";
-import { BLACK, CERISE_LIGHT, CERISE_STRONG, WHITE } from "../assets/style/colors";
+import { BLACK, CERISE_LIGHT, CERISE_STRONG, LIGHT_GRAY, WHITE } from "../assets/style/colors";
 
 if (getApps().length == 0)
     initializeApp(firebaseConfig);
@@ -28,8 +28,11 @@ const Login = ({ navigation }: any) => {
 
     return (
         <View style={loginStyles.container}>
+            <View style={loginStyles.header}>
+                <Text style={loginStyles.headerText}>Welcome to nAllen!</Text>
+            </View>
             <View style={loginStyles.innerContainer}>
-                <Text style={loginStyles.innerTitle}>LOGIN</Text>
+                <Text style={loginStyles.innerTitle}>Sign in</Text>
                 <View>
                     <View style={loginStyles.inputField}>
                         <Text style={loginStyles.title}>Email</Text>
@@ -43,7 +46,7 @@ const Login = ({ navigation }: any) => {
                 
                 <View style={loginStyles.buttonBar}>
                     <Pressable style={loginStyles.button} onPress={() => login()} >
-                        <Text style={loginStyles.buttonText}>Login</Text>
+                        <Text style={loginStyles.buttonText}>Sign in</Text>
                     </Pressable>
 
                     <TouchableOpacity onPress={() => navigation.navigate('Register')}>
@@ -68,11 +71,12 @@ export const loginStyles = StyleSheet.create({
     textInput: {
         color: BLACK,
         fontSize: 16,
-        borderRadius: 5,
         borderWidth: 1,
         borderColor: BLACK,
-        padding: 5,
-        marginTop: 4,
+        padding: 8,
+        marginTop: 10,
+        backgroundColor: "#f2f2f2"
+
     },
 
     buttonBar: {
@@ -80,45 +84,64 @@ export const loginStyles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 10,
+        marginTop: 20,
     },
 
     container: {
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         fontWeight: 'bold',
         fontSize: 40,
-        padding: 10,
+        padding: 0,
+        margin: 0,
         // space between the flex elements
-        backgroundColor: CERISE_LIGHT,
+        backgroundColor: WHITE,
         width: "100%",
         height: "100%",
+        overflow: 'hidden'
     },
+
+    header: {
+        backgroundColor: CERISE_LIGHT,
+        overflow: 'hidden',
+        width: "100%",
+        top: 0,
+        padding: 10,
+        paddingHorizontal: 30,
+        minHeight: "160px",
+        maxHeight: "28%",
+        height: "100%"
+    },
+
+
+    headerText: {
+        color: WHITE,
+        fontWeight: '900',
+        fontSize: 32,
+        marginTop: 'auto',
+        paddingBottom: 20
+    },
+
 
     innerContainer: {
         display: 'flex',
-        padding: 10,
-        borderColor: BLACK,
-        borderStyle: "solid",
-        borderRadius: 10,
-        borderWidth: 2,
-        maxWidth: "90%",
-        width: 500,
+        width: "100%",
         backgroundColor: WHITE,
+        paddingHorizontal: 30,
+        paddingTop: 30
     },
 
     innerTitle: {
-       fontSize: 30,
+       fontSize: 20,
        fontWeight: '900',
-       textAlign: "center",
     },
 
     button: {
         backgroundColor: CERISE_STRONG,
-        borderRadius: 5,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
+        borderRadius: 2,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         marginVertical: 5,
     },
 
@@ -128,13 +151,13 @@ export const loginStyles = StyleSheet.create({
     
     buttonText: {
         color: WHITE,
-        fontSize: 20,
+        fontSize: 14,
         fontWeight: 'bold',
     },
     linkText: {
         // color light blue
-        color: '#00bfff',
-        fontSize: 16,
+        color: CERISE_STRONG,
+        fontSize: 14,
     },
 });
 
