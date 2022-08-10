@@ -1,57 +1,52 @@
-import React, { useState } from "react";
-import { StyleSheet, TextInput, Text, TouchableOpacity, View, Pressable } from 'react-native'
-import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import firebaseConfig from "../.firebase-config";
-import { BLACK, CERISE_LIGHT, CERISE_STRONG, WHITE } from "../assets/style/colors";
+import { View, Text, TouchableOpacity, Button, StyleSheet, TextInput, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import login, { auth } from './login'
+import { BLACK, CERISE_STRONG, WHITE } from '../assets/style/colors';
 
-if (getApps().length == 0)
-    initializeApp(firebaseConfig);
+const Register = ({ navigation }: any) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
 
-export const app = getApp();
-export const auth = getAuth(app);
-
-const Login = ({ navigation }: any) => {
-    const [email, setEmail] = useState("mathiasmagnussons@gmail.com");
-    const [password, setPassword] = useState("arstarsarst");
-
-    const login = async () => {
+    const handleRegister = async () => {
         try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
-
+            if (password === rePassword) {
+                const user = await createUserWithEmailAndPassword(auth, email, password);
+            }
             navigation.navigate("Tab");
         } catch (err) {
             console.error(err);
         }
     };
 
-
     return (
         <View style={styles.container}>
-
-            <Text>LOGIN</Text>
+            <Text>REGISTER</Text>
             <View>
                 <Text style={styles.title}>Email</Text>
                 <TextInput style={styles.textInput} onChangeText={email => setEmail(email)} />
                 <Text style={styles.title}>Password</Text>
                 <TextInput style={styles.textInput} onChangeText={password => setPassword(password)} />
+                <Text style={styles.title}>Re-enter Password</Text>
+                <TextInput style={styles.textInput} onChangeText={rePassword => setRePassword(rePassword)} />
             </View>
-
-            <Pressable style={styles.button} onPress={() => login()} >
-                <Text style={styles.buttonText}>Login</Text>
+            <Pressable style={styles.button} onPress={() => handleRegister()} >
+                <Text style={styles.buttonText}>Register</Text>
             </Pressable>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text style={styles.linkText} >Don't have an acount yet? Register here!</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.linkText} >Already have an account? Login here!</Text>
             </TouchableOpacity>
 
             <Pressable style={{ marginTop: 100, backgroundColor: BLACK }} onPress={() => navigation.navigate('Tab')}>
                 <Text>Bypass</Text>
             </Pressable>
-        </View >
-    );
+        </View>
+    )
 }
 
+export default Register
 const styles = StyleSheet.create({
     title: {
         color: BLACK,
@@ -61,11 +56,11 @@ const styles = StyleSheet.create({
 
     textInput: {
         color: BLACK,
-        fontSize: 16,
+        fontSize: 20,
         borderRadius: 5,
         borderWidth: 1,
         borderColor: BLACK,
-        padding: 5,
+        padding: 5
     },
     container: {
         display: 'flex',
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 40,
         marginTop: "40vh",
-        padding: 10,
+        padding: 40,
         // space between the flex elements
         flexWrap: 'wrap',
     },
@@ -91,6 +86,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     linkText: {
         // color light blue
         color: '#00bfff',
@@ -98,4 +94,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Login;

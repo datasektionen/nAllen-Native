@@ -14,6 +14,7 @@ import Profile from './screens/profile';
 
 import { TabIcon } from './components'
 import UserHandler from './utils/user';
+import Register from './screens/register';
 
 
 const Stack = createStackNavigator();
@@ -27,7 +28,7 @@ export default function App() {
           <Stack.Navigator
             screenOptions={{
               headerStyle: { elevation: 0 },
-              cardStyle: { backgroundColor: BLACK },
+              cardStyle: { backgroundColor: WHITE },
             }}
           >
 
@@ -35,6 +36,11 @@ export default function App() {
               name="Login"
               options={{ headerShown: false, animationEnabled: false }}
               component={Login}
+            />
+            <Stack.Screen
+              name="Register"
+              options={{ headerShown: false, animationEnabled: false }}
+              component={Register}
             />
 
             <Stack.Screen
