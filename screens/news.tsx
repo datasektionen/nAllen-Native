@@ -17,6 +17,7 @@ type NewsItem = {
   title: string,
   text: string,
   date: string,
+  author: string,
 };
 
 const News = () => {
@@ -33,14 +34,15 @@ const News = () => {
         title: n.data().title,
         text: n.data().text,
         date: dateToSring(n.data().date),
+        author: n.data().author,
       }]));
     });
   }, []);
 
   return (
     <View>
-      {news.map(({ id, title, text, date }) =>
-        <NewsCard key={id} title={title} text={text} date={date} />
+      {news.map(({ id, title, text, date, author }) =>
+        <NewsCard key={id} title={title} text={text} date={date} author={author} />
       )}
     </View>
   )

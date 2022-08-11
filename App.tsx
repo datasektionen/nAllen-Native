@@ -15,14 +15,11 @@ import Profile from "./screens/profile";
 import { TabIcon } from "./components"
 import UserHandler from "./utils/user";
 import Register from "./screens/register";
-import { listenToNotifications } from "./utils/push";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  useEffect(() => void listenToNotifications(), []);
-
   return (
     <View style={styles.container}>
       <UserHandler>

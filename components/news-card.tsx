@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import React, { useState } from "react"
-import { CERISE_STRONG, WHITE } from "../assets/style/colors"
-import Icon from "./icon"
+import { WHITE } from "../assets/style/colors"
 
 type Props = {
   title: string,
@@ -10,40 +9,25 @@ type Props = {
   author?: string,
 }
 
-
 const NewsCard: React.FC<Props> = ({ title, text, date, author }) => {
   const [isExpanded, setIsExpanded] = useState(false)
-  const toggleExpanded = () => setIsExpanded(!isExpanded)
-
-  const maxChars = 50
-  const isLong = text.length > maxChars
-  const preview = isLong ? text.slice(0, maxChars) + "..." : text
 
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.topRow}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.date}>{date}</Text>
-        <TouchableOpacity onPress={toggleExpanded}>
+      <TouchableOpacity onPress={() => setIsExpanded(e => !e)}>
+        <View style={styles.topRow}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.date}>{date}</Text>
 
-          {isLong ?
-            <Icon style={isExpanded ? styles.upsideDown : null} name="chevron-down" size={24} color={CERISE_STRONG} />
-            : null
-          }
-        </TouchableOpacity>
-      </View>
-      <View style={styles.textContainer}>
-        {!isExpanded ?
-          <Text style={styles.text}>{preview}</Text>
-          :
-          <Text style={styles.text}>{text}</Text>
-        }
-        {author && <Text style={styles.authorText}>Author: {author}</Text>}
-      </View>
+        </View>
+        <View style={styles.textContainer}>
+          <Text numberOfLines={isExpanded ? 0 : 1} style={styles.text}>{text}</Text>
+          {author && <Text style={styles.authorText}>Author: {author}</Text>}
+        </View>
+      </TouchableOpacity>
     </View >
   )
 }
-
 
 export default NewsCard
 
