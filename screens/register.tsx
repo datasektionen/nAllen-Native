@@ -27,8 +27,11 @@ const Register = ({ navigation }: any) => {
 
     return (
         <View style={loginStyles.container}>
+            <View style={loginStyles.header}>
+                <Text style={loginStyles.headerText}>Welcome to nAllen!</Text>
+            </View>
             <View style={loginStyles.innerContainer}>
-                <Text style={loginStyles.innerTitle}>REGISTER</Text>
+                <Text style={loginStyles.innerTitle}>Register</Text>
                 <View>
                     <View style={loginStyles.inputField}>
                         <Text style={loginStyles.title}>Email</Text>
