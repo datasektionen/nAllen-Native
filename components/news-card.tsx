@@ -22,20 +22,25 @@ const NewsCard: React.FC<Props> = ({ title, text, date, author }) => {
     const isLong = text.length > maxChars
     const preview = isLong ? text.slice(0, maxChars) + '...' : text
 
+    console.log(date)
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.topRow}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.date}>{date}</Text>
-                <TouchableOpacity onPress={toggleExpanded}>
 
-                    {isLong && !isExpanded ?
+
+                {isLong && !isExpanded ?
+                    <TouchableOpacity onPress={toggleExpanded}>
                         <Icon name="chevron-down" size={24} color={CERISE_STRONG} />
-                        : isLong ?
+                    </TouchableOpacity>
+                    : isLong ?
+                        <TouchableOpacity onPress={toggleExpanded}>
                             <Icon name="close" size={24} color={CERISE_STRONG} />
-                            : null
-                    }
-                </TouchableOpacity>
+                        </TouchableOpacity>
+                        : null
+                }
             </View>
             <View style={styles.textContainer}>
                 {!isExpanded ?
@@ -85,6 +90,8 @@ const styles = StyleSheet.create({
     date: {
         fontSize: 12,
         fontWeight: 'bold',
+        // float right
+        textAlign: 'right',
     },
 
     textContainer: {
