@@ -31,11 +31,11 @@ const UserHandler: React.FC<Props> = ({ children }) => {
     const auth = getAuth(app);
     setAuth(auth);
 
-    return onAuthStateChanged(auth, thisUser => {
+    return onAuthStateChanged(auth, user => {
+      setUser(user);
       if (user != null) {
-        console.log("We are authenticated now!");
+        console.log("We are authenticated now!", user);
       }
-      setUser(thisUser);
 
       // Do other things
     });

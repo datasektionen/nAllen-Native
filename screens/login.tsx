@@ -7,8 +7,8 @@ import { UserContext } from "../utils/user";
 
 
 const Login = ({ navigation }: any) => {
-  const [email, setEmail] = useState("mathiasmagnussons@gmail.com");
-  const [password, setPassword] = useState("arstarsarst");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { auth } = useContext(UserContext);
 
   const login = async () => {
