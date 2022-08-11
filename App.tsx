@@ -1,26 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { BLACK, LIGHT_GRAY, CERISE_STRONG, GRAY, WHITE, } from './assets/style/colors';
-import Login from './screens/login';
-import Calendar from './screens/calendar';
-import Home from './screens/home';
-import News from './screens/news';
-import Profile from './screens/profile';
+import { WHITE } from "./assets/style/colors";
+import Login from "./screens/login";
+import Calendar from "./screens/calendar";
+import Home from "./screens/home";
+import News from "./screens/news";
+import Profile from "./screens/profile";
 
-import { TabIcon } from './components'
-import UserHandler from './utils/user';
-import Register from './screens/register';
-
+import { TabIcon } from "./components"
+import UserHandler from "./utils/user";
+import Register from "./screens/register";
+import { listenToNotifications } from "./utils/push";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  useEffect(() => void listenToNotifications(), []);
+
   return (
     <View style={styles.container}>
       <UserHandler>
@@ -49,8 +51,10 @@ export default function App() {
             >
               {() => (
                 <Tab.Navigator
-                  tabBarOptions={{
-                    showLabel: false,
+                  screenOptions={{
+                    tabBarShowLabel: false,
+                    tabBarStyle: [{ display: "flex" }, null],
+
                   }}
                 >
 
@@ -119,14 +123,13 @@ export default function App() {
       </UserHandler>
     </View >
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    // full width and height
-    width: '100%',
-    height: '100%',
+    backgroundColor: "#fff",
+    width: "100%",
+    height: "100%",
   },
 });
