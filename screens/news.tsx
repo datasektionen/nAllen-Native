@@ -1,10 +1,27 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { cloneElement } from 'react'
 import { NewsCard } from '../components'
+import { getDatabase, ref as firebaseRef, onValue } from 'firebase/database';
+
+import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
 
 const News = () => {
 
     const longString = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum,`
+
+    const setupNewsListener = () => {
+        console.log("Hola")
+        const db = getFirestore();
+        const reference = collection(db, 'news');
+        const unsubscribe = onSnapshot(reference, (snapshot) => {
+            console.log(snapshot)
+            snapshot.forEach(doc => {
+                console.log(doc.data())
+            })
+        });
+    }
+    setupNewsListener();
+
 
     return (
         <View>
@@ -27,5 +44,6 @@ const News = () => {
         </View>
     )
 }
+
 
 export default News
