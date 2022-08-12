@@ -34,6 +34,7 @@ const News = () => {
         });
     }
 
+
     // run setupNewsListener when component is mounted
     React.useEffect(() => {
         setupNewsListener()
@@ -58,12 +59,14 @@ const News = () => {
                 )
             })}
 
-            {news.length === 0 && (
-                <Text style={styles.loading}>Loading news...</Text>
-            )}
+            {
+                news.length === 0 && (
+                    <Text style={styles.loading}>Loading news...</Text>
+                )
+            }
 
 
-        </View>
+        </View >
     )
 }
 
