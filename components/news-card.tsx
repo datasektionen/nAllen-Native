@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import React, { useState } from "react"
-import { CERISE_STRONG, WHITE } from "../assets/style/colors"
+import { CERISE_LIGHT, CERISE_STRONG, WHITE } from "../assets/style/colors"
 import Icon from "./icon"
 
 type Props = {
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: CERISE_STRONG,
   },
 
   text: {
@@ -89,6 +90,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     marginLeft: "auto",
+    color: CERISE_STRONG,
+
   },
 
   textContainer: {
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
 
   authorText: {
     fontSize: 14,
-    color: "#ccc",
+    color: CERISE_LIGHT,
   },
 
   upsideDown: {

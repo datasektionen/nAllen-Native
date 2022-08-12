@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, FlatList, ScrollView, StatusBar } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { BLACK, WHITE } from '../assets/style/colors'
+import { BLACK, CERISE_STRONG, WHITE } from '../assets/style/colors'
 
 
 interface Props {
@@ -23,10 +23,6 @@ const Group: React.FC<Props> = ({
     name,
     members
 }) => {
-    console.log(name)
-
-
-
     return (
         <View style={styles.mainContainer}>
             <Text style={styles.title}>{name}</Text>
@@ -90,7 +86,7 @@ const styles = StyleSheet.create({
     },
     memberText: {
         fontSize: 14,
-        color: BLACK,
+        color: CERISE_STRONG,
 
     }
 } as const)

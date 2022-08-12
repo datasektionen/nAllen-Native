@@ -23,10 +23,23 @@ const News = () => {
                 entries.push(data)
                 // map entries.createdAt to entries.createdAt.seconds
             })
+            entries = entries.sort((a, b) => {
+                return b.createdAt.seconds - a.createdAt.seconds
+            })
+
+
             entries = entries.map((entry: any) => {
                 const seconds = entry.createdAt.seconds;
                 const date = new Date(seconds * 1000);
-                const formattedDate = date.toLocaleDateString();
+                const formattedDate = date.toLocaleDateString('en-GB',
+                    {
+                        weekday: 'short',
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    }
+                );
                 entry.createdAt = formattedDate;
                 return entry;
             }).sort((a: any, b: any) => b.createdAt - a.createdAt);

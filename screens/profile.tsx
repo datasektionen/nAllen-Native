@@ -14,9 +14,6 @@ const Profile = () => {
   // user context
   const { user } = useContext(UserContext)
 
-
-
-
   const setupNewsListener = () => {
     console.log("Setting up groupMembers listener")
     const db = getFirestore();
