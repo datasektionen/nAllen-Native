@@ -4,8 +4,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { BLACK, CERISE_LIGHT, CERISE_STRONG, WHITE } from "../assets/style/colors";
 import { UserContext } from "../utils/user";
 
-
-
 const Login = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +17,12 @@ const Login = ({ navigation }: any) => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const bypass = () => {
+    setEmail("test@test.test");
+    setPassword("testtest");
+    login();
   };
 
 
@@ -41,7 +45,7 @@ const Login = ({ navigation }: any) => {
         </View>
 
         <View style={loginStyles.buttonBar}>
-          <Pressable style={loginStyles.button} onPress={() => login()} >
+          <Pressable style={loginStyles.button} onPress={login} >
             <Text style={loginStyles.buttonText}>Sign in</Text>
           </Pressable>
 
@@ -49,7 +53,7 @@ const Login = ({ navigation }: any) => {
             <Text style={loginStyles.linkText} >Create account</Text>
           </TouchableOpacity>
         </View>
-        <Pressable style={{ marginTop: 5, backgroundColor: BLACK }} onPress={() => navigation.navigate("Tab")}>
+        <Pressable style={{ marginTop: 5, backgroundColor: BLACK }} onPress={bypass}>
           <Text>Bypass</Text>
         </Pressable>
       </View>
@@ -71,8 +75,7 @@ export const loginStyles = StyleSheet.create({
     borderColor: BLACK,
     padding: 8,
     marginTop: 10,
-    backgroundColor: "#f2f2f2"
-
+    backgroundColor: "#f2f2f2",
   },
 
   buttonBar: {
@@ -91,11 +94,10 @@ export const loginStyles = StyleSheet.create({
     fontSize: 40,
     padding: 0,
     margin: 0,
-    // space between the flex elements
     backgroundColor: WHITE,
     width: "100%",
     height: "100%",
-    overflow: "hidden"
+    overflow: "hidden",
   },
 
   header: {
@@ -107,7 +109,7 @@ export const loginStyles = StyleSheet.create({
     paddingHorizontal: 30,
     minHeight: "160px",
     maxHeight: "28%",
-    height: "100%"
+    height: "100%",
   },
 
 
@@ -116,7 +118,7 @@ export const loginStyles = StyleSheet.create({
     fontWeight: "900",
     fontSize: 32,
     marginTop: "auto",
-    paddingBottom: 20
+    paddingBottom: 20,
   },
 
 
@@ -125,7 +127,7 @@ export const loginStyles = StyleSheet.create({
     width: "100%",
     backgroundColor: WHITE,
     paddingHorizontal: 30,
-    paddingTop: 30
+    paddingTop: 30,
   },
 
   innerTitle: {
