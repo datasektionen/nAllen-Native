@@ -53,9 +53,6 @@ const Login = ({ navigation }: any) => {
             <Text style={loginStyles.linkText} >Create account</Text>
           </TouchableOpacity>
         </View>
-        <Pressable style={{ marginTop: 5, backgroundColor: BLACK }} onPress={bypass}>
-          <Text>Bypass</Text>
-        </Pressable>
       </View>
     </View >
   );

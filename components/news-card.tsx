@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import React, { useState } from "react"
-import { WHITE } from "../assets/style/colors"
+import { CERISE_LIGHT, CERISE_STRONG, WHITE } from "../assets/style/colors"
+import Icon from "./icon"
 
 type Props = {
   title: string,
@@ -12,19 +13,41 @@ type Props = {
 const NewsCard: React.FC<Props> = ({ title, text, date, author }) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
+  const limit = 100
+  const isLong = text.length > limit
+
+  const shortText = isLong ? text.substring(0, limit) + "..." : text
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded)
+  }
+
+
   return (
     <View style={styles.mainContainer}>
-      <TouchableOpacity onPress={() => setIsExpanded(e => !e)}>
-        <View style={styles.topRow}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.date}>{date}</Text>
+      <View style={styles.topRow}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.date}>{date}</Text>
+        {/* button to expand content */}
 
-        </View>
-        <View style={styles.textContainer}>
-          <Text numberOfLines={isExpanded ? 0 : 1} style={styles.text}>{text}</Text>
-          {author && <Text style={styles.authorText}>Author: {author}</Text>}
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={toggleExpanded}>
+          {isLong && !isExpanded ?
+            <Icon name="chevron-down" size={24} color={CERISE_STRONG} />
+            : isLong ?
+              <Icon name="close" size={24} color={CERISE_STRONG} />
+              : null
+          }
+        </TouchableOpacity>
+
+      </View>
+      <View style={styles.textContainer}>
+        {!isExpanded ?
+          <Text style={styles.text}>{shortText}</Text>
+          :
+          <Text style={styles.text}>{text}</Text>
+        }
+        {author && <Text style={styles.authorText}>Author: {author}</Text>}
+      </View>
     </View >
   )
 }
@@ -49,6 +72,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: CERISE_STRONG,
   },
 
   text: {
@@ -56,14 +80,18 @@ const styles = StyleSheet.create({
   },
 
   topRow: {
+    display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
 
   date: {
     fontSize: 12,
     fontWeight: "bold",
     marginLeft: "auto",
+    color: CERISE_STRONG,
+
   },
 
   textContainer: {
@@ -73,7 +101,7 @@ const styles = StyleSheet.create({
 
   authorText: {
     fontSize: 14,
-    color: "#ccc",
+    color: CERISE_LIGHT,
   },
 
   upsideDown: {

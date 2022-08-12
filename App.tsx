@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { WHITE } from "./assets/style/colors";
+import { CERISE_LIGHT, WHITE } from "./assets/style/colors";
 import Login from "./screens/login";
 import Calendar from "./screens/calendar";
 import Home from "./screens/home";
@@ -26,8 +26,11 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
-              headerStyle: { elevation: 0 },
+              headerStyle: {
+                elevation: 0,
+              },
               cardStyle: { backgroundColor: WHITE },
+
             }}
           >
 
@@ -51,11 +54,22 @@ export default function App() {
                   screenOptions={{
                     tabBarShowLabel: false,
                     tabBarStyle: [{ display: "flex" }, null],
+                    headerStyle: {
+                      backgroundColor: CERISE_LIGHT,
+                      // white text color
+
+                    },
+                    headerTitleStyle: {
+                      color: WHITE,
+                      fontWeight: "bold",
+                      // size 30
+                      fontSize: 30,
+                      // use your preferred color code
+                    }
 
                   }}
                 >
-
-                  <Tab.Screen
+                  {/* <Tab.Screen
                     name="Home"
                     component={Home}
                     options={{
@@ -67,7 +81,7 @@ export default function App() {
                         />
                       ),
                     }}
-                  />
+                  /> */}
 
                   <Tab.Screen
                     name="News"
@@ -83,7 +97,7 @@ export default function App() {
                     }}
                   />
 
-                  <Tab.Screen
+                  {/* <Tab.Screen
                     name="Calendar"
                     component={Calendar}
                     options={{
@@ -95,7 +109,7 @@ export default function App() {
                         />
                       ),
                     }}
-                  />
+                  /> */}
 
 
 
