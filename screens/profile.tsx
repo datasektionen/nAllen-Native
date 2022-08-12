@@ -1,27 +1,25 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 import React, { useContext, useEffect, useState } from "react"
 import { mockGroups } from "../assets/data/mock-group"
 import Group from "../components/group"
 
-import { nollan } from "../assets/data/n0llan"
 import { UserContext } from "../utils/user"
 import { collection, getFirestore, onSnapshot } from "firebase/firestore"
-import { WHITE } from "../assets/style/colors"
+import { CERISE_NEW, WHITE } from "../assets/style/colors"
+import { signOut } from "firebase/auth";
 
-const Profile = () => {
+const Profile = ({ navigation }: any) => {
   const [allMembers, setAllMembers] = useState<any>([])
   const [groupMembers, setGroupMembers] = useState<any>([])
-  // user context
-  const { user } = useContext(UserContext)
+  const { user, auth } = useContext(UserContext)
 
   const setupNewsListener = () => {
-    console.log("Setting up groupMembers listener")
     const db = getFirestore();
     const reference = collection(db, 'n0llan');
 
-    let groupMembers = []
+    let groupMembers = [];
     const unsubscribe = onSnapshot(reference, (snapshot) => {
-      let members: any[] = []
+      let members: any[] = [];
       let me: any;
       snapshot.forEach(doc => {
         //console.log(doc.data())
@@ -30,46 +28,54 @@ const Profile = () => {
         if (data.email === user!.email) {
           me = data;
         }
-        members.push(data)
+        members.push(data);
       })
       if (me) {
         // filter members to only those in the same group as the user
         members = members.filter((member: any) => {
-          return member.group === me.group
+          return member.group === me.group;
         })
-        console.log('new members:', members)
-        setGroupMembers(members)
+        console.log('new members:', members);
+        setGroupMembers(members);
       }
     })
 
   }
 
   // run setupNewsListener when component is mounted
-  React.useEffect(() => {
-    setupNewsListener()
-  }, [])
+  useEffect(() => {
+    setupNewsListener();
+  }, []);
 
   // check for when groupMembers, updates
-  React.useEffect(() => {
-    console.log("Members updated", groupMembers)
+  useEffect(() => {
+    console.log("Members updated", groupMembers);
+  }, [groupMembers]);
 
-  }, [groupMembers])
+  const logout = () => {
+    auth && signOut(auth);
+      navigation.navigate("Login");
+  };
 
   return (
     <View>
       {groupMembers.length > 0 ? (
-        <Group name={groupMembers[0]["nØllegrupp"]} members={groupMembers} />
+        <Group name={groupMembers[0].group} members={groupMembers} />
       ) : (
         <View style={styles.loading}>
           <Text>Loading groups...</Text>
         </View>
       )}
+      <View style={styles.idk}>
+        <TouchableOpacity onPress={logout}>
+          <Text style={styles.logOut}>Log out</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-  )
-}
+  );
+};
 
-
-export default Profile
+export default Profile;
 
 // styles
 const styles = StyleSheet.create({
@@ -81,6 +87,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: WHITE,
     alignItems: "center",
-    justifyContent: "center"
-  }
-})
+    justifyContent: "center",
+  },
+  idk: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "flex-end",
+  },
+  logOut: {
+    color: WHITE,
+    backgroundColor: CERISE_NEW,
+    fontSize: 14,
+    fontWeight: "bold",
+    padding: 4,
+  },
+});

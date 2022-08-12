@@ -7,7 +7,9 @@ import { UserContext } from "../utils/user";
 const Login = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { auth } = useContext(UserContext);
+  const { auth, user } = useContext(UserContext);
+
+  if (user !== null) navigation.navigate("Tab");
 
   const login = async () => {
     if (auth == null) return;
@@ -19,46 +21,53 @@ const Login = ({ navigation }: any) => {
     }
   };
 
-  const bypass = () => {
-    setEmail("test@test.test");
-    setPassword("testtest");
-    login();
+  const bypass = async () => {
+    if (auth == null) return;
+    try {
+      await signInWithEmailAndPassword(auth, "test@test.test", "testtest");
+      navigation.navigate("Tab");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-
   return (
-    <View style={loginStyles.container}>
-      <View style={loginStyles.header}>
-        <Text style={loginStyles.headerText}>Welcome to nAllen!</Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Welcome to nAllen!</Text>
       </View>
-      <View style={loginStyles.innerContainer}>
-        <Text style={loginStyles.innerTitle}>Sign in</Text>
+      <View style={styles.innerContainer}>
+        <Text style={styles.innerTitle}>Sign in</Text>
         <View>
-          <View style={loginStyles.inputField}>
-            <Text style={loginStyles.title}>Email</Text>
-            <TextInput style={loginStyles.textInput} onChangeText={email => setEmail(email)} />
+          <View style={styles.inputField}>
+            <Text style={styles.title}>Email</Text>
+            <TextInput style={styles.textInput} onChangeText={email => setEmail(email)} />
           </View>
-          <View style={loginStyles.inputField}>
-            <Text style={loginStyles.title}>Password</Text>
-            <TextInput secureTextEntry style={loginStyles.textInput} onChangeText={password => setPassword(password)} />
+          <View style={styles.inputField}>
+            <Text style={styles.title}>Password</Text>
+            <TextInput secureTextEntry style={styles.textInput} onChangeText={password => setPassword(password)} />
           </View>
         </View>
 
-        <View style={loginStyles.buttonBar}>
-          <Pressable style={loginStyles.button} onPress={login} >
-            <Text style={loginStyles.buttonText}>Sign in</Text>
+        <View style={styles.buttonBar}>
+          <Pressable style={styles.button} onPress={login} >
+            <Text style={styles.buttonText}>Sign in</Text>
+          </Pressable>
+
+          <Pressable style={styles.button} onPress={bypass}>
+            <Text style={styles.buttonText}>Bypass</Text>
           </Pressable>
 
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={loginStyles.linkText} >Create account</Text>
+            <Text style={styles.linkText} >Create account</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View >
   );
-}
+};
 
-export const loginStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
   title: {
     color: BLACK,
     fontWeight: "bold",
@@ -150,7 +159,6 @@ export const loginStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   linkText: {
-    // color light blue
     color: CERISE_STRONG,
     fontSize: 14,
   },

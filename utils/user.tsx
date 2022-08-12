@@ -1,8 +1,9 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import firebaseConfig from "../.firebase-config";
 import React, { useState, useEffect } from "react"
-import { getAuth, Auth, onAuthStateChanged, User as FirebaseUser } from "firebase/auth"
-
+import { Auth, onAuthStateChanged, User as FirebaseUser, initializeAuth } from "firebase/auth";
+import { getReactNativePersistence } from "firebase/auth/react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface User {
   user: FirebaseUser | null
@@ -16,11 +17,11 @@ interface Props {
 export const UserContext = React.createContext<User>({
   user: null,
   auth: null
-})
+});
 
 
 const UserHandler: React.FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<FirebaseUser | null>(null) // TODO: get this from local storage if possible
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const [auth, setAuth] = useState<Auth | null>(null);
 
   useEffect(() => {
@@ -28,16 +29,13 @@ const UserHandler: React.FC<Props> = ({ children }) => {
       initializeApp(firebaseConfig);
 
     const app = getApp();
-    const auth = getAuth(app);
+    const auth = initializeAuth(app, {
+      persistence: getReactNativePersistence(AsyncStorage),
+    });
     setAuth(auth);
 
     return onAuthStateChanged(auth, user => {
       setUser(user);
-      if (user != null) {
-        console.log("We are authenticated now!", user);
-      }
-
-      // Do other things
     });
   }, []);
 
@@ -45,7 +43,7 @@ const UserHandler: React.FC<Props> = ({ children }) => {
     <UserContext.Provider value={{ user, auth }}>
       {children}
     </UserContext.Provider>
-  )
-}
+  );
+};
 
-export default UserHandler
+export default UserHandler;
