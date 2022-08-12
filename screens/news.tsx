@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React, { cloneElement } from 'react'
 import { NewsCard } from '../components'
 import { getDatabase, ref as firebaseRef, onValue } from 'firebase/database';
 
 import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
+import { WHITE } from '../assets/style/colors';
 
 const News = () => {
     const [news, setNews] = React.useState<any[]>([])
@@ -15,19 +16,21 @@ const News = () => {
         const reference = collection(db, 'news');
         const unsubscribe = onSnapshot(reference, (snapshot) => {
             console.log(snapshot)
+
+            let entries: any[] = []
             snapshot.forEach(doc => {
-                console.log(doc.data())
-                let entries = doc.data().entries;
+                const data = doc.data();
+                entries.push(data)
                 // map entries.createdAt to entries.createdAt.seconds
-                entries = entries.map((entry: any) => {
-                    const seconds = entry.createdAt.seconds;
-                    const date = new Date(seconds * 1000);
-                    const formattedDate = date.toLocaleDateString();
-                    entry.createdAt = formattedDate;
-                    return entry;
-                }).sort((a: any, b: any) => b.createdAt - a.createdAt);
-                setNews(entries)
             })
+            entries = entries.map((entry: any) => {
+                const seconds = entry.createdAt.seconds;
+                const date = new Date(seconds * 1000);
+                const formattedDate = date.toLocaleDateString();
+                entry.createdAt = formattedDate;
+                return entry;
+            }).sort((a: any, b: any) => b.createdAt - a.createdAt);
+            setNews(entries)
         });
     }
 
@@ -55,6 +58,10 @@ const News = () => {
                 )
             })}
 
+            {news.length === 0 && (
+                <Text style={styles.loading}>Loading news...</Text>
+            )}
+
 
         </View>
     )
@@ -62,3 +69,16 @@ const News = () => {
 
 
 export default News
+
+const styles = StyleSheet.create({
+    loading: {
+        display: "flex",
+        flexDirection: "column",
+        margin: 10,
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: WHITE,
+        alignItems: "center",
+        justifyContent: "center"
+    }
+})

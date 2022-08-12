@@ -1,4 +1,4 @@
-import { View, Text } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import React, { useContext, useEffect, useState } from "react"
 import { mockGroups } from "../assets/data/mock-group"
 import Group from "../components/group"
@@ -6,6 +6,7 @@ import Group from "../components/group"
 import { nollan } from "../assets/data/n0llan"
 import { UserContext } from "../utils/user"
 import { collection, getFirestore, onSnapshot } from "firebase/firestore"
+import { WHITE } from "../assets/style/colors"
 
 const Profile = () => {
   const [allMembers, setAllMembers] = useState<any>([])
@@ -61,10 +62,28 @@ const Profile = () => {
     <View>
       {groupMembers.length > 0 ? (
         <Group name={groupMembers[0]["nØllegrupp"]} members={groupMembers} />
-      ) : <Text>No group</Text>}
+      ) : (
+        <View style={styles.loading}>
+          <Text>Loading groups...</Text>
+        </View>
+      )}
     </View>
   )
 }
 
 
 export default Profile
+
+// styles
+const styles = StyleSheet.create({
+  loading: {
+    display: "flex",
+    flexDirection: "column",
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: WHITE,
+    alignItems: "center",
+    justifyContent: "center"
+  }
+})
