@@ -24,6 +24,9 @@ const Group: React.FC<Props> = ({
     members
 }) => {
     console.log(name)
+
+
+
     return (
         <View style={styles.mainContainer}>
             <Text style={styles.title}>{name}</Text>

@@ -5,6 +5,7 @@ import Group from "../components/group"
 
 import { nollan } from "../assets/data/n0llan"
 import { UserContext } from "../utils/user"
+import { collection, getFirestore, onSnapshot } from "firebase/firestore"
 
 const Profile = () => {
   const [groupMembers, setGroupMembers] = useState<any>([])
@@ -13,26 +14,37 @@ const Profile = () => {
 
 
 
-  useEffect(() => {
-    if (user) {
-      const me = nollan.find((member: any) => member["E-postadress"] === user.email)
-      if (me) {
-        const nolleGroupMembers = nollan.filter((member: any) => {
-          return member["nØllegrupp"] === me["nØllegrupp"]
-        })
-        setGroupMembers(nolleGroupMembers)
-      }
-    }
+
+  const setupNewsListener = () => {
+    console.log("Setting up groupMembers listener")
+    const db = getFirestore();
+    const reference = collection(db, 'n0llan');
+
+    const me = user!.email;
+
+
+
+    const unsubscribe = onSnapshot(reference, (snapshot) => {
+      console.log(snapshot)
+      snapshot.forEach(doc => {
+        console.log(doc.data())
+
+      })
+    });
+  }
+
+  // run setupNewsListener when component is mounted
+  React.useEffect(() => {
+    setupNewsListener()
   }, [])
 
-  // log group members when they update
-  useEffect(() => {
-    console.log("Group members updated", groupMembers)
-    if (groupMembers[0]) {
-      console.log(groupMembers[0])
-    }
+  // check for when groupMembers, updates
+  React.useEffect(() => {
+    console.log("News updated", groupMembers)
+    groupMembers.map((item, index) => {
+      console.log(item)
+    })
   }, [groupMembers])
-
   return (
     <View>
       {groupMembers.length > 0 ? (
