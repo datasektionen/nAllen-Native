@@ -1,70 +1,93 @@
-import React from "react"
-import { StyleSheet, Text, View } from "react-native"
-import { WHITE } from "../assets/style/colors"
+import { View, Text, StyleSheet, FlatList, ScrollView, StatusBar } from 'react-native'
+import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { BLACK, WHITE } from '../assets/style/colors'
 
-export type GroupMember = {
-  name: string,
-  phone: string,
-  groupName: string,
+
+interface Props {
+    name: string
+    members: any[]
 }
 
-export type GroupT = {
-  name: string,
-  members: GroupMember[],
+const renderItem = ({ item }: { item: any }) => {
+    return (
+        <View style={styles.member}>
+            <Text style={styles.memberText}>{item["Namn"]}</Text>
+            <Text style={styles.memberText}>{item["Telefon"]}</Text>
+        </View>
+    )
 }
 
-const Group: React.FC<GroupT> = ({ name, members }) => {
-  return (
-    <View style={styles.mainContainer}>
-      <Text style={styles.title}>{name}</Text>
-      <View style={styles.membersContainer}>
-        {members.map((member, index) => (
-          <View style={styles.memberContainer} key={index}>
-            <Text style={styles.memberName}>{member.name}</Text>
-            <Text style={styles.memberPhone}>{member.phone}</Text>
-          </View>
-        ))}
-      </View>
-    </View>
-  )
+
+const Group: React.FC<Props> = ({
+    name,
+    members
+}) => {
+    console.log(name)
+    return (
+        <View style={styles.mainContainer}>
+            <Text style={styles.title}>{name}</Text>
+            <FlatList
+                data={members}
+                renderItem={renderItem}
+                keyExtractor={(item: any) => item["Namn"]}
+            />
+        </View>
+
+
+
+    )
 }
 
 export default Group
 
+// styles
 const styles = StyleSheet.create({
-  mainContainer: {
-    display: "flex",
-    flexDirection: "column",
-    margin: 10,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: WHITE,
-    borderWidth: 1,
-    borderColor: "#ccc",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  membersContainer: {
-    display: "flex",
-    flexDirection: "column",
-    marginTop: 10,
-    height: "auto"
-  },
-  memberContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  memberName: {
-    fontSize: 16,
-  },
-  memberPhone: {
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-})
+    mainContainer: {
+        display: "flex",
+        flexDirection: "column",
+        margin: 10,
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: WHITE,
+        height: "auto",
+        borderWidth: 1,
+        borderColor: "#ccc",
+        justifyContent: "space-evenly",
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+    text: {
+        fontSize: 16,
+    },
+    topRow: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    date: {
+        fontSize: 14,
+        color: "#aaa",
+        marginLeft: "auto",
+    },
+    textContainer: {
+        marginTop: 10,
+        height: "auto"
+    },
+    authorText: {
+        fontSize: 60,
+        color: "#ccc",
+    },
+    member: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 10,
+    },
+    memberText: {
+        fontSize: 14,
+        color: BLACK,
 
+    }
+} as const)
