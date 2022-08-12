@@ -12,8 +12,8 @@ interface Props {
 const renderItem = ({ item }: { item: any }) => {
     return (
         <View style={styles.member}>
-            <Text style={styles.memberText}>{item["Namn"]}</Text>
-            <Text style={styles.memberText}>{item["Telefon"]}</Text>
+            <Text style={styles.memberText}>{item.name}</Text>
+            <Text style={styles.memberText}>{item.phone}</Text>
         </View>
     )
 }
@@ -33,7 +33,7 @@ const Group: React.FC<Props> = ({
             <FlatList
                 data={members}
                 renderItem={renderItem}
-                keyExtractor={(item: any) => item["Namn"]}
+                keyExtractor={(item: any) => item.kthId}
             />
         </View>
 

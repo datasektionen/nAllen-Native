@@ -8,6 +8,7 @@ import { UserContext } from "../utils/user"
 import { collection, getFirestore, onSnapshot } from "firebase/firestore"
 
 const Profile = () => {
+  const [allMembers, setAllMembers] = useState<any>([])
   const [groupMembers, setGroupMembers] = useState<any>([])
   // user context
   const { user } = useContext(UserContext)
@@ -20,17 +21,29 @@ const Profile = () => {
     const db = getFirestore();
     const reference = collection(db, 'n0llan');
 
-    const me = user!.email;
-
-
-
+    let groupMembers = []
     const unsubscribe = onSnapshot(reference, (snapshot) => {
-      console.log(snapshot)
+      let members: any[] = []
+      let me: any;
       snapshot.forEach(doc => {
-        console.log(doc.data())
-
+        //console.log(doc.data())
+        // add doc to members list
+        const data = doc.data();
+        if (data.email === user!.email) {
+          me = data;
+        }
+        members.push(data)
       })
-    });
+      if (me) {
+        // filter members to only those in the same group as the user
+        members = members.filter((member: any) => {
+          return member.group === me.group
+        })
+        console.log('new members:', members)
+        setGroupMembers(members)
+      }
+    })
+
   }
 
   // run setupNewsListener when component is mounted
@@ -40,11 +53,10 @@ const Profile = () => {
 
   // check for when groupMembers, updates
   React.useEffect(() => {
-    console.log("News updated", groupMembers)
-    groupMembers.map((item, index) => {
-      console.log(item)
-    })
+    console.log("Members updated", groupMembers)
+
   }, [groupMembers])
+
   return (
     <View>
       {groupMembers.length > 0 ? (
@@ -53,5 +65,6 @@ const Profile = () => {
     </View>
   )
 }
+
 
 export default Profile
